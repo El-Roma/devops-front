@@ -1,12 +1,9 @@
 name: Run tests and generate coverage
-run: npm run test:ci
-continue-on-error: true
 
 on:
   push:
     branches:
       - main
-
 
 jobs:
   build:
@@ -16,14 +13,16 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+      - name: Run tests and generate coverage
+        run: npm run test:ci
+        continue-on-error: true
+
       - uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
-      - name: Run tests and generate coverage
-        run: npm run test:ci
-        continue-on-error: true
       # If you wish to fail your job when the Quality Gate is red, uncomment the
       # following lines. This would typically be used to fail a deployment.
       # - uses: sonarsource/sonarqube-quality-gate-action@master
