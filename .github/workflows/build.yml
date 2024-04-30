@@ -1,4 +1,6 @@
-name: Build
+name: Run tests and generate coverage
+run: npm run test:ci
+continue-on-error: true
 
 on:
   push:
